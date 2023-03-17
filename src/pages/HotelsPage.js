@@ -12,11 +12,11 @@ import { FaPen, FaTrash, FaPlus } from "react-icons/fa";
 
 import FormHotels from '../components/FormHotels';
 import Service from '../services/hotelsService';
+import { Hotel } from '../models/hotels.model';
 
 export default function HotelsPage() {
 
     const [hotels, setHotels] = useState([]);
-    const [add, setAdd] = useState({});
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
@@ -34,10 +34,11 @@ export default function HotelsPage() {
         setIsOpen(true);
     };
 
-    const handleClose = (value) => {
+    const handleClose = () => {
         setIsOpen(false);
-        setAdd(value);
     };
+
+    console.log(new Hotel())
 
     if (hotels.length === 0) {
         return (
@@ -87,7 +88,6 @@ export default function HotelsPage() {
             </TableContainer>
 
             <FormHotels
-                selectedValue={add}
                 isOpen={isOpen}
                 onClose={handleClose} />
         </>
