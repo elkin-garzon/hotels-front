@@ -14,13 +14,16 @@ import './styles/general.scss'
 export default function App() {
 	return (
 		<BrowserRouter>
-			<Navbar />
-			<Routes>
-				<Route path="/" element={<HomePage />} />
-				<Route path="/hotels" element={<HotelsPage />} />
-				<Route path="/rooms" element={<RoomsPage />} />
-				<Route path="*" element={<NotFoundPage />} />
-			</Routes>
+			<div className="container">
+				<Navbar />
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/hotels" element={<HotelsPage />} />
+					<Route path="/rooms" element={<RoomsPage />} />
+					<Route path="*" element={<NotFoundPage />} />
+				</Routes>
+			</div>
+
 		</BrowserRouter>
 	);
 }

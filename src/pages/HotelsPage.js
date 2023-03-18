@@ -13,11 +13,17 @@ import { FaPen, FaTrash, FaPlus } from "react-icons/fa";
 import FormHotels from '../components/FormHotels';
 import Service from '../services/hotelsService';
 import { Hotel } from '../models/hotels.model';
+import { Alerts } from '../shared/alerts';
+
+
+const alert = new Alerts();
 
 export default function HotelsPage() {
 
     const [hotels, setHotels] = useState([]);
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [data, setData] = useState({})
+
 
     useEffect(() => {
         getdata();
@@ -30,6 +36,18 @@ export default function HotelsPage() {
         setHotels(data);
     }
 
+    const addData = () => {
+        setData(new Hotel().addData());
+        setIsOpen(false);
+        handleClickOpen();
+    }
+
+    const edithData = (obj) => {
+        setData(new Hotel().edithData(obj));
+        setIsOpen(false);
+        handleClickOpen();
+    }
+
     const handleClickOpen = () => {
         setIsOpen(true);
     };
@@ -38,7 +56,26 @@ export default function HotelsPage() {
         setIsOpen(false);
     };
 
-    console.log(new Hotel())
+    const onSabe = async (data) => {
+        let service = new Service();
+        let resp = await service.onSaveData(data);
+        if (resp.status) {
+            getdata()
+        }
+    }
+
+    const deleteData = async (data) => {
+        alert.delete().then(({ isConfirmed }) => {
+            if (isConfirmed) {
+                let service = new Service();
+                service.deleteData(data).then((resp) => {
+                    if (resp.status) {
+                        getdata()
+                    }
+                })
+            }
+        })
+    }
 
     if (hotels.length === 0) {
         return (
@@ -50,7 +87,7 @@ export default function HotelsPage() {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>Nuevo hotel <FaPlus /></Button>
+            <Button variant="outlined" onClick={() => addData()}>Nuevo hotel <FaPlus /></Button>
             <br />
             <br />
             <TableContainer component={Paper}>
@@ -77,8 +114,8 @@ export default function HotelsPage() {
                                 <TableCell>{row.room_count}</TableCell>
                                 <TableCell>
                                     <Stack spacing={2} direction="row">
-                                        <Button className='btn-edith'><FaPen /></Button>
-                                        <Button className='btn-delete'><FaTrash /></Button>
+                                        <Button className='btn-edith' onClick={() => edithData(row)}><FaPen /></Button>
+                                        <Button className='btn-delete' onClick={() => deleteData(row)}><FaTrash /></Button>
                                     </Stack>
                                 </TableCell>
                             </TableRow>
@@ -87,9 +124,16 @@ export default function HotelsPage() {
                 </Table>
             </TableContainer>
 
-            <FormHotels
-                isOpen={isOpen}
-                onClose={handleClose} />
+            {
+                isOpen &&
+                <FormHotels
+                    isOpen={isOpen}
+                    dataForm={data}
+                    onClose={handleClose}
+                    onSabe={onSabe}
+                />
+            }
+
         </>
     )
 }
