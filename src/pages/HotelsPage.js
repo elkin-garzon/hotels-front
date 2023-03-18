@@ -11,12 +11,13 @@ import Button from '@mui/material/Button';
 import { FaPen, FaTrash, FaPlus } from "react-icons/fa";
 
 import FormHotels from '../components/FormHotels';
-import Service from '../services/hotelsService';
-import { Hotel } from '../models/hotels.model';
+import { HotelsService } from '../services/hotelsService';
+import { Hotel } from '../models/hotel.model';
 import { Alerts } from '../shared/alerts';
 
 
 const alert = new Alerts();
+const service = new HotelsService();
 
 export default function HotelsPage() {
 
@@ -31,12 +32,12 @@ export default function HotelsPage() {
 
 
     const getdata = async () => {
-        let service = new Service();
         let { data } = await service.getData();
         setHotels(data);
     }
 
     const addData = () => {
+
         setData(new Hotel().addData());
         setIsOpen(false);
         handleClickOpen();
@@ -56,10 +57,9 @@ export default function HotelsPage() {
         setIsOpen(false);
     };
 
-    const onSabe = async (data) => {
-        let service = new Service();
-        let resp = await service.onSaveData(data);
-        if (resp.status) {
+    const onSave = async (data) => {
+        let { status } = await service.onSaveData(data);
+        if (status) {
             getdata()
         }
     }
@@ -67,9 +67,8 @@ export default function HotelsPage() {
     const deleteData = async (data) => {
         alert.delete().then(({ isConfirmed }) => {
             if (isConfirmed) {
-                let service = new Service();
-                service.deleteData(data).then((resp) => {
-                    if (resp.status) {
+                service.deleteData(data).then(({ status }) => {
+                    if (status) {
                         getdata()
                     }
                 })
@@ -81,6 +80,16 @@ export default function HotelsPage() {
         return (
             <div>
                 <h2>SIn Hoteles</h2>
+                <Button variant="outlined" onClick={() => addData()}>Nuevo hotel <FaPlus /></Button>
+                {
+                    isOpen &&
+                    <FormHotels
+                        isOpen={isOpen}
+                        dataForm={data}
+                        onClose={handleClose}
+                        onSave={onSave}
+                    />
+                }
             </div>
         )
     }
@@ -123,14 +132,13 @@ export default function HotelsPage() {
                     </TableBody>
                 </Table>
             </TableContainer>
-
             {
                 isOpen &&
                 <FormHotels
                     isOpen={isOpen}
                     dataForm={data}
                     onClose={handleClose}
-                    onSabe={onSabe}
+                    onSave={onSave}
                 />
             }
 

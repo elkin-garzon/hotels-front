@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -7,18 +6,17 @@ import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Validate from '../shared/hotel.validate';
-import { Hotel } from '../models/hotels.model';
 import { useFormik } from 'formik';
 
-export default function FormHotels({ onClose, dataForm, isOpen, onSabe }) {
+export default function FormHotels({ onClose, dataForm, isOpen, onSave }) {
 
     const fullScreen = useMediaQuery(useTheme().breakpoints.down('md'));
-
+    debugger
     const formik = useFormik({
         initialValues: dataForm,
         validationSchema: Validate,
         onSubmit: (values) => {
-            onSabe(values)
+            onSave(values)
             onClose()
         },
     });
@@ -26,7 +24,7 @@ export default function FormHotels({ onClose, dataForm, isOpen, onSabe }) {
     return (
         <Dialog onClose={onClose} open={isOpen} fullScreen={fullScreen} fullWidth={true} maxWidth="md" >
             <DialogTitle>
-                {dataForm._status == 'N' ? 'Nuevo Hotel' : 'Editar Hotel'}
+                {dataForm._status === 'N' ? 'Nuevo Hotel' : 'Editar Hotel'}
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={formik.handleSubmit} className="row">

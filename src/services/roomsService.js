@@ -1,9 +1,9 @@
 import { api } from '../shared/api';
 
-export class HotelsService {
+export class roomsService {
 
     async getData() {
-        return await api.get(`/hotels`);
+        return await api.get(`/rooms`);
     }
 
     async onSaveData(data) {
@@ -20,7 +20,7 @@ export class HotelsService {
      * @returns 
      */
     async postData(data) {
-        return await api.post(`/hotels`, data)
+        return await api.post(`/rooms`, data)
     }
 
     /**
@@ -29,7 +29,7 @@ export class HotelsService {
      * @returns 
      */
     async putData(data) {
-        return await api.put(`/hotels/${data.id}`, data)
+        return await api.put(`/rooms/${data.id}`, data)
     }
 
     /**
@@ -38,6 +38,6 @@ export class HotelsService {
     * @returns 
     */
     async deleteData(data) {
-        return await api.delete(`/hotels/${data.id}`)
+        return await api.delete(`/rooms/${data.id}`)
     }
 }
