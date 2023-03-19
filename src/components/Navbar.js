@@ -5,13 +5,10 @@ export default function Navbar() {
         <nav>
             <ul>
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? 'active' : ''} to="/">home</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'active' : ''} to="/">hoteles</NavLink>
                 </li>
                 <li>
-                    <NavLink className={({ isActive }) => isActive ? 'active' : ''} to="/hotels">hotels</NavLink>
-                </li>
-                <li>
-                    <NavLink className={({ isActive }) => isActive ? 'active' : ''} to="/rooms">rooms</NavLink>
+                    <NavLink className={({ isActive }) => isActive ? 'active' : ''} to="/rooms">habitaciones</NavLink>
                 </li>
             </ul>
         </nav>

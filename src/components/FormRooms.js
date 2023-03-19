@@ -17,15 +17,28 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
     const fullScreen = useMediaQuery(useTheme().breakpoints.down('md'));
 
     const types = [
-        'ESTANDAR',
-        'JUNIOR',
-        'ESTANDAR'
-    ]
-
-    const lodging = [
-        'SENCILLA',
-        'TRIPLE',
-        'DOBLE'
+        {
+            name: 'Estandar',
+            lodging: [
+                'Sencilla',
+                'Doble'
+            ]
+        },
+        {
+            name: 'Junior',
+            lodging: [
+                'Triple',
+                'Cuadruple'
+            ]
+        },
+        {
+            name: 'Suite',
+            lodging: [
+                'Sencilla',
+                'Doble',
+                'Triple'
+            ]
+        }
     ]
 
     const formik = useFormik({
@@ -44,8 +57,12 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={formik.handleSubmit} className="row">
-
-
+                    <pre>
+                    {
+                        JSON.stringify(formik.values, null, 4)
+                    }
+                    </pre>
+                    
                     <div className='col-md-6 margin-b'>
                         <FormControl fullWidth>
                             <InputLabel id="hotel_id">Hotel</InputLabel>
@@ -57,6 +74,7 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
                                 label="hotel_id"
                                 onChange={formik.handleChange}
                             >
+
                                 {hotels.map((row) => (
                                     <MenuItem value={row.id} key={row.id}>{row.name}</MenuItem>
                                 ))}
@@ -76,29 +94,33 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
                                 onChange={formik.handleChange}
                             >
                                 {types.map((row, index) => (
-                                    <MenuItem value={row} key={index}>{row}</MenuItem>
+                                    <MenuItem value={row.name} key={index}>{row.name}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                     </div>
 
-                    <div className='col-md-6 margin-b'>
-                        <FormControl fullWidth>
-                            <InputLabel id="lodging">Acomodación</InputLabel>
-                            <Select
-                                name='lodging'
-                                labelId="lodging"
-                                id="lodging"
-                                value={formik.values.lodging}
-                                label="lodging"
-                                onChange={formik.handleChange}
-                            >
-                                {lodging.map((row, index) => (
-                                    <MenuItem value={row} key={index}>{row}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </div>
+                    {
+                        formik.values.room_type !== '' &&
+                        <div className='col-md-6 margin-b'>
+                            <FormControl fullWidth>
+                                <InputLabel id="lodging">Acomodación</InputLabel>
+                                <Select
+                                    name='lodging'
+                                    labelId="lodging"
+                                    id="lodging"
+                                    value={formik.values.lodging}
+                                    label="lodging"
+                                    onChange={formik.handleChange}
+                                >
+                                    {types.filter((fil) => fil.name === formik.values.room_type)[0].lodging.map((row, index) => (
+                                        <MenuItem value={row} key={index}>{row}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
+                    }
+
 
                     <div className='col-md-6 margin-b'>
                         <TextField
@@ -115,9 +137,13 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
                         />
                     </div>
 
-                    <div className='col-md-12'>
+                    <div className='btn-content col-md-12'>
                         <Button color="primary" variant="contained" type="submit" >
-                            Submit
+                            Guardar
+                        </Button>
+
+                        <Button color="primary" variant="contained" type="button" onClick={() => onClose()}>
+                            Cancelar
                         </Button>
                     </div>
 

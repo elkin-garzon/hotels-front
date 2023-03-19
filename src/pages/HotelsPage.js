@@ -79,8 +79,12 @@ export default function HotelsPage() {
     if (hotels.length === 0) {
         return (
             <div>
-                <h2>SIn Hoteles</h2>
-                <Button variant="outlined" onClick={() => addData()}>Nuevo hotel <FaPlus /></Button>
+                <Button className='btn-add' variant="outlined" onClick={() => addData()}>
+                    <span>
+                        Nuevo hotel
+                    </span>
+                    <FaPlus />
+                </Button>
                 {
                     isOpen &&
                     <FormHotels
@@ -96,7 +100,12 @@ export default function HotelsPage() {
 
     return (
         <>
-            <Button variant="outlined" onClick={() => addData()}>Nuevo hotel <FaPlus /></Button>
+            <Button className='btn-add' variant="outlined" onClick={() => addData()}>
+                <span>
+                    Nuevo hotel
+                </span>
+                <FaPlus />
+            </Button>
             <br />
             <br />
             <TableContainer component={Paper}>
@@ -104,12 +113,12 @@ export default function HotelsPage() {
                     <TableHead>
                         <TableRow>
                             <TableCell>id</TableCell>
-                            <TableCell>name</TableCell>
-                            <TableCell>address</TableCell>
-                            <TableCell>city</TableCell>
-                            <TableCell>nit</TableCell>
-                            <TableCell>room count</TableCell>
-                            <TableCell>actions</TableCell>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell>Dirección</TableCell>
+                            <TableCell>Ciudad</TableCell>
+                            <TableCell>Nit</TableCell>
+                            <TableCell>N. Habitaciones</TableCell>
+                            <TableCell>Acciones</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

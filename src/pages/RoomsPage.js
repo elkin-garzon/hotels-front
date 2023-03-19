@@ -87,8 +87,12 @@ export default function RoomsPage() {
     if (rooms.length === 0) {
         return (
             <>
-                <h2>SIn Habitaciones disponibles</h2>
-                <Button variant="outlined" onClick={() => addData()}>Nueva Habitación <FaPlus /></Button>
+                <Button className='btn-add' variant="outlined" onClick={() => addData()}>
+                    <span>
+                        Nueva Habitación
+                    </span>
+                    <FaPlus />
+                </Button>
                 {
                     isOpen &&
                     <FormRooms
@@ -105,7 +109,12 @@ export default function RoomsPage() {
 
     return (
         <>
-            <Button variant="outlined" onClick={() => addData()}>Nueva Habitación <FaPlus /></Button>
+            <Button className='btn-add' variant="outlined" onClick={() => addData()}>
+                <span>
+                    Nueva Habitación
+                </span>
+                <FaPlus />
+            </Button>
             <br />
             <br />
             <TableContainer component={Paper}>
@@ -127,7 +136,7 @@ export default function RoomsPage() {
                                 <TableCell>{row.count}</TableCell>
                                 <TableCell>{row.room_type}</TableCell>
                                 <TableCell>{row.lodging}</TableCell>
-                                <TableCell>{row.hotel_id}</TableCell>
+                                <TableCell>{row.name}</TableCell>
                                 <TableCell>
                                     <Stack spacing={2} direction="row">
                                         <Button className='btn-edith' onClick={() => edithData(row)}><FaPen /></Button>

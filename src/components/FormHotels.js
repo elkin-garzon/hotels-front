@@ -103,9 +103,13 @@ export default function FormHotels({ onClose, dataForm, isOpen, onSave }) {
                         />
                     </div>
 
-                    <div className='col-md-12'>
+                    <div className='btn-content col-md-12'>
                         <Button color="primary" variant="contained" type="submit" >
-                            Submit
+                            Guardar
+                        </Button>
+
+                        <Button color="primary" variant="contained" type="button" onClick={() => onClose()}>
+                            Cancelar
                         </Button>
                     </div>
 
