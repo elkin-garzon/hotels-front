@@ -57,12 +57,7 @@ export default function FormRooms({ onClose, dataForm, isOpen, hotels, onSave })
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={formik.handleSubmit} className="row">
-                    <pre>
-                    {
-                        JSON.stringify(formik.values, null, 4)
-                    }
-                    </pre>
-                    
+                   
                     <div className='col-md-6 margin-b'>
                         <FormControl fullWidth>
                             <InputLabel id="hotel_id">Hotel</InputLabel>

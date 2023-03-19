@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 export default function FormHotels({ onClose, dataForm, isOpen, onSave }) {
 
     const fullScreen = useMediaQuery(useTheme().breakpoints.down('md'));
-    debugger
+    
     const formik = useFormik({
         initialValues: dataForm,
         validationSchema: Validate,
